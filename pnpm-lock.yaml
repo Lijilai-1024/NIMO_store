@@ -27,6 +27,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
+      pnpm:
+        specifier: ^9.1.4
+        version: 9.1.4
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -731,6 +734,11 @@ packages:
   pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
+
+  pnpm@9.1.4:
+    resolution: {integrity: sha512-nfnPJ8kXFWRsfWddHJyOQfb86IJG8TGMGqah7RrrPE8DL830umPMacT+bWNCeRdrU1hyfY8sweZbZfQ84vi/sA==}
+    engines: {node: '>=18.12'}
+    hasBin: true
 
   postcss-import@15.1.0:
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
@@ -1541,6 +1549,8 @@ snapshots:
       vue-demi: 0.14.7(vue@3.4.27)
 
   pirates@4.0.6: {}
+
+  pnpm@9.1.4: {}
 
   postcss-import@15.1.0(postcss@8.4.38):
     dependencies:

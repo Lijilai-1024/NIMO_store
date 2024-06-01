@@ -11,6 +11,9 @@
 
 <script>
 import Card from '@/components/Card.vue'
+import { useProductStore } from '@/stores/index';
+import { mapState } from 'pinia';
+
 
 export default {
     components: {
@@ -49,8 +52,9 @@ export default {
             localStorage.setItem("productInCart", JSON.stringify(this.productInCart));
             localStorage.setItem("products", JSON.stringify(this.products));
         },
-    },
+    },           
     created() {
+        const productStore = useProductStore();
         let productInCart = localStorage.getItem("productInCart");
         if (productInCart) {
             this.productInCart = JSON.parse(productInCart);
@@ -79,6 +83,10 @@ export default {
                     count: 0,
                 }
             ];
+            this.products.forEach(product => {
+                productStore.products.push(product);
+            });
+            console.log(productStore.products);
             localStorage.setItem("products", JSON.stringify(this.products));
         }
     },
