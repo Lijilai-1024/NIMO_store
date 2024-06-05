@@ -13,7 +13,7 @@
 import Card from '@/components/Card.vue'
 import { useProductStore } from '@/stores/index';
 import { mapState } from 'pinia';
-
+import axios from 'axios';
 
 export default {
     components: {
@@ -49,46 +49,45 @@ export default {
                 item.count = count;
             }
             this.products.find(item => item.id === product.id).count = count;
-            localStorage.setItem("productInCart", JSON.stringify(this.productInCart));
-            localStorage.setItem("products", JSON.stringify(this.products));
+            //localStorage.setItem("productInCart", JSON.stringify(this.productInCart));
+            //localStorage.setItem("products", JSON.stringify(this.products));
         },
+        get_data() {
+            axios.get("http://127.0.0.1:8000/products/").then(response => {
+                for (let i = 0; i < response.data.length; i++) {
+                    let product_item = {};
+                    product_item.id = response.data[i].id;
+                    product_item.imgurl = response.data[i].img_url;
+                    product_item.title = response.data[i].name;
+                    product_item.content = response.data[i].description;
+                    product_item.value = String(response.data[i].price);
+                    product_item.count = 0;
+                    this.products.push(product_item);
+                }
+            });
+        }
     },           
     created() {
-        const productStore = useProductStore();
-        let productInCart = localStorage.getItem("productInCart");
-        if (productInCart) {
-            this.productInCart = JSON.parse(productInCart);
-        }
-        let products = localStorage.getItem("products");
-        if (products) {
-            this.products = JSON.parse(products);
-        }
-        else
-        {
-            this.products = [
-                {
-                    id: 1,
-                    imgurl: "https://picsum.photos/200/300",
-                    title: "Card Title",
-                    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ex accusamus, voluptatem aliquam harum sequi sed corporis, fugiat natus deleniti, reiciendis asperiores aliquid odio pariatur obcaecati nihil ducimus totam tempore.",
-                    value: "￥648",
-                    count: 0,
-                },
-                {
-                    id: 2,
-                    imgurl: "https://picsum.photos/200/300",
-                    title: "Card Title",
-                    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ex accusamus, voluptatem aliquam harum sequi sed corporis, fugiat natus deleniti, reiciendis asperiores aliquid odio pariatur obcaecati nihil ducimus totam tempore.",
-                    value: "￥648",
-                    count: 0,
-                }
-            ];
-            this.products.forEach(product => {
-                productStore.products.push(product);
-            });
-            console.log(productStore.products);
-            localStorage.setItem("products", JSON.stringify(this.products));
-        }
+        // const productStore = useProductStore();
+        // let productInCart = localStorage.getItem("productInCart");
+        // if (productInCart) {
+        //     this.productInCart = JSON.parse(productInCart);
+        // }
+        // let products = localStorage.getItem("products");
+        // if (products) {
+        //     this.products = JSON.parse(products);
+        // }
+        // else
+        // {
+        //     this.products.forEach(product => {
+        //         productStore.products.push(product);
+        //     });
+        //     console.log(productStore.products);
+        //     localStorage.setItem("products", JSON.stringify(this.products));
+        // }
+    },
+    mounted() {
+        this.get_data();
     },
     unmounted() {
         localStorage.setItem("products", JSON.stringify(this.products));
